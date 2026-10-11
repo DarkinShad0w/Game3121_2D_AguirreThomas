@@ -1,0 +1,5 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Button text="Restart" enabled="true" authoring-id="338743995" style="bottom: -292px; align-self: center; display: none; opacity: 1; visibility: visible; overflow: visible;"/>
+    <ui:Label text="HighScore: 0&#10; " name="HighScore" authoring-id="-1813160656" style="align-self: center; top: 32px; color: rgb(255, 255, 255); -unity-font-style: bold; left: 7px;"/>
+    <ui:Label text="Score: 0" name="ScoreLabel" emoji-fallback-support="false" authoring-id="541268965" style="color: rgb(236, 226, 226); -unity-font-style: bold; top: 19px; align-self: flex-start; display: flex; right: -30px; left: 295px;"/>
+</ui:UXML>
