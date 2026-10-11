@@ -131,8 +131,15 @@ public class PlayerController : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Obstacle"))
         {
+            SoundManager.Instance.PlayDeath();
             Debug.Log("Game Over");
             GameOver();
+        }
+
+        if (collision.gameObject.CompareTag("Wall"))
+        {
+            float volume = Mathf.Clamp01(collision.relativeVelocity.magnitude / 10f);
+            SoundManager.Instance.PlayWallHit(volume);
         }
     }
 

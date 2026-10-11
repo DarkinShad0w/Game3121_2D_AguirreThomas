@@ -22,9 +22,16 @@ public class Obstacle : MonoBehaviour
         rb.AddTorque(randomTorque);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        
+        if (collision.gameObject.CompareTag("Obstacle"))
+        {
+            if (gameObject.GetEntityId() > collision.gameObject.GetEntityId())
+            {
+                return;
+            }
+
+            SoundManager.Instance.PlayObstacleHit();
+        }
     }
 }
