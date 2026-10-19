@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour
     public float scoreMultiplier = 10.0f;
 
     public GameObject boosterFlame;
+    public ParticleSystem moveParticle;
+    public GameObject wallHitParticlePF;
 
     private float elapsedTime = 0f;
     private float score = 0f;
@@ -81,12 +83,22 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        SetMoveParticles(false);
     }
 
     private void OnDestroy()
     {
         panel.UnregisterUIReloadCallback(OnUIReload);
         if (restartButton != null) restartButton.clicked -= RestartGame;
+    }
+
+    private void SetMoveParticles(bool on)
+    {
+        if (moveParticle == null)
+            return;
+
+        var emission = moveParticle.emission;
+        emission.enabled = on;
     }
 
 
@@ -118,10 +130,12 @@ public class PlayerController : MonoBehaviour
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {
             boosterFlame.SetActive(true);
+            SetMoveParticles(true);
         }
         else if (Mouse.current.leftButton.wasReleasedThisFrame)
         {
             boosterFlame.SetActive(false);
+            SetMoveParticles(false);
         }
     }
 
@@ -140,6 +154,13 @@ public class PlayerController : MonoBehaviour
         {
             float volume = Mathf.Clamp01(collision.relativeVelocity.magnitude / 10f);
             SoundManager.Instance.PlayWallHit(volume);
+
+            if(wallHitParticlePF != null)
+            {
+                Vector2 hitPoint = collision.GetContact(0).point;
+                Quaternion rotation = Quaternion.FromToRotation(Vector3.up, collision.GetContact(0).normal);
+                Instantiate(wallHitParticlePF, hitPoint, rotation);
+            }
         }
     }
 
@@ -164,6 +185,7 @@ public class PlayerController : MonoBehaviour
 
 
         boosterFlame.SetActive(false);
+        SetMoveParticles(false);
 
         foreach (var r in GetComponentsInChildren<Renderer>())
         {

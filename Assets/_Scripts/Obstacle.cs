@@ -8,6 +8,8 @@ public class Obstacle : MonoBehaviour
     public float maxSpeed = 150.0f;
     public float maxSpinSpeed = 10.0f;
 
+    public GameObject hitParticlePF;
+
     void Start()
     {
         float randomSize = Random.Range(minSize, maxSize);
@@ -32,6 +34,12 @@ public class Obstacle : MonoBehaviour
             }
 
             SoundManager.Instance.PlayObstacleHit();
+
+            if (hitParticlePF != null)
+            {
+                Vector2 hitPoint = collision.GetContact(0).point;
+                Instantiate(hitParticlePF, hitPoint, Quaternion.identity);
+            }
         }
     }
 }
